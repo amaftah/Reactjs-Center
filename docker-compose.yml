@@ -1,0 +1,38 @@
+volumes:
+  data: { }
+  db-data: { }
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: centerdb
+      MYSQL_USER: dbuser
+      MYSQL_PASSWORD: userpass
+    ports:
+      - "6033:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      test-network:
+        
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: pma
+    links:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    restart: always
+    ports:
+      - "8081:80"
+    networks:
+      test-network:
+
+networks:
+  test-network:
+    driver: bridge
