@@ -1,9 +1,6 @@
-const { defineConfig } = require('vite');
+import reactRefresh from '@vitejs/plugin-react-refresh';
 
-module.exports = defineConfig({
-  root: './',
-  base: '/',
-  server: {
-    port: 3000,
-  },
-});
+export default {
+  plugins: [reactRefresh()],
+};
+
